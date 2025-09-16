@@ -3,7 +3,7 @@ set -euo pipefail
 OFFSCREEN_MON="OFFSCREEN"
 
 TARGET_MONITORS="$(
-    hyprctl -j monitors \
+    hyprctl -j monitors all \
     | jq -r --arg off "$OFFSCREEN_MON" '.[] | .name | select((startswith("eDP") | not) and (. != $off))'
 )"
 
