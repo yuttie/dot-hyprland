@@ -2,6 +2,11 @@
 set -euo pipefail
 OFFSCREEN_MON="OFFSCREEN"
 
+BUILTIN_MONITORS="$(hyprctl -j monitors all | jq -r '.[] | .name | select(startswith("eDP"))')"
+for mon in $BUILTIN_MONITORS; do
+    hyprctl keyword monitor "$mon, preferred, auto, 1"
+done
+
 TARGET_MONITORS="$(
     hyprctl -j monitors \
     | jq -r --arg off "$OFFSCREEN_MON" '.[] | .name | select((startswith("eDP") | not) and (. != $off))'
