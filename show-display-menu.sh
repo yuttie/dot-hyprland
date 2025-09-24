@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-CHOSEN="$(cat <<EOF | rofi -dmenu -p "Display menu")" || exit 1
+CHOSEN="$(cat <<EOF | rofi -dmenu -i -p "Display menu")" || exit 1
 Disable external monitors
 Enable external monitors
 EOF
