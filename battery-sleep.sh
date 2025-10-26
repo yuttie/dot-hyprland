@@ -1,3 +1,5 @@
 #!/bin/sh
 set -eu
-[[ "$(cat /sys/class/power_supply/AC*/online)" == "1" ]] || systemctl suspend-then-hibernate
+upower -b > /dev/null 2>&1 \
+    && ! grep --line-regexp 1 /sys/class/power_supply/AC*/online > /dev/null 2>&1 \
+    && systemctl suspend-then-hibernate
