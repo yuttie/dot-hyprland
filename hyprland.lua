@@ -464,8 +464,8 @@ hl.bind(mainMod .. " + " .. "space",           hl.dsp.window.cycle_next({ floati
 hl.bind(mainMod .. " + " .. "space",           hl.dsp.window.alter_zorder({ mode = "top" }))
 hl.bind(mainMod .. " + " .. "CONTROL + space", hl.dsp.window.cycle_next({ tiled = true }))
 hl.bind(mainMod .. " + " .. "SHIFT + space",   hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + " .. "F",               hl.dsp.window.fullscreen_state({ internal = 2,  client = -1, action = "toggle" }))
-hl.bind(mainMod .. " + " .. "CONTROL + F",     hl.dsp.window.fullscreen_state({ internal = -1, client =  2, action = "toggle" }))
+hl.bind(mainMod .. " + " .. "F",               hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+hl.bind(mainMod .. " + " .. "CONTROL + F",     hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 hl.bind(mainMod .. " + " .. "SHIFT + S",       hl.dsp.window.pin())
 
 -- Move focus
