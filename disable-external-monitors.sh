@@ -3,7 +3,7 @@ set -euo pipefail
 
 BUILTIN_MONITORS="$(hyprctl -j monitors all | jq -r '.[] | .name | select(startswith("eDP"))')"
 for mon in $BUILTIN_MONITORS; do
-    hyprctl keyword monitor "$mon, preferred, auto, 1"
+    hyprctl eval "hl.monitor({ output = '$mon', mode = 'preferred', position = 'auto', scale = 1 })"
 done
 
 TARGET_MONITORS="$(
@@ -12,5 +12,5 @@ TARGET_MONITORS="$(
 )"
 
 for mon in $TARGET_MONITORS; do
-    hyprctl keyword monitor "$mon, disable"
+    hyprctl eval "hl.monitor({ output = '$mon', disabled = true })"
 done

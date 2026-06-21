@@ -11,7 +11,7 @@ other_active_count="$(
 )"
 
 if (( other_active_count > 0 )); then
-  hyprctl keyword monitor "$target, disable"
+  hyprctl eval "hl.monitor({ output = '$target', disabled = true })"
 else
   notify-send "Refusing to disable $target" "No other active monitor found"
   exit 1

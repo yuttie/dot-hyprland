@@ -9,5 +9,5 @@ rofi_workspace() {
 
 NAME="$(rofi_workspace)" || exit 1
 if [ -n "$NAME" ]; then
-    hyprctl dispatch movetoworkspace "name:$NAME"
+    hyprctl dispatch "hl.dsp.window.move({ workspace = 'name:$NAME', follow = true })"
 fi

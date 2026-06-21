@@ -12,4 +12,4 @@ if [ -z "$CHOSEN" ]; then
     exit 1
 fi
 
-hyprctl dispatch workspace "name:$CHOSEN"
+hyprctl dispatch "hl.dsp.focus({ workspace = 'name:$CHOSEN' })"
