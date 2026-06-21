@@ -1,6 +1,5 @@
 #!/bin/bash
 set -euo pipefail
-OFFSCREEN_MON="OFFSCREEN"
 
 rofi_workspace() {
     hyprctl -j workspaces \

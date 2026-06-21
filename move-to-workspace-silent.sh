@@ -1,10 +1,9 @@
 #!/bin/bash
 set -euo pipefail
-OFFSCREEN_MON="OFFSCREEN"
 
 rofi_workspace() {
     hyprctl -j workspaces \
-    | jq -r --arg off "$OFFSCREEN_MON" '.[] | select(.monitor != $off) | .name' \
+    | jq -r '.[] | .name' \
     | rofi -dmenu -i -p "Move to workspace (silent)"
 }
 
