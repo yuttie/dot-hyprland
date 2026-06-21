@@ -509,10 +509,10 @@ hl.gesture({ fingers = 3, direction = "down", mods = mainMod, action = function(
 -- Screen capture
 local grimblast = "grimblast --notify save"
 local cwebp = "cwebp -lossless -q 100 -m 6 -mt"
-hl.bind(                    "Print",           hl.dsp.exec_cmd(grimblast .. " screen - | $cwebp -o ~/Pictures/screen_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
-hl.bind(mainMod .. " + " .. "Print",           hl.dsp.exec_cmd(grimblast .. " output - | $cwebp -o ~/Pictures/output_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
-hl.bind(                    "SHIFT + Print",   hl.dsp.exec_cmd(grimblast .. " active - | $cwebp -o ~/Pictures/active_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
-hl.bind(                    "CONTROL + Print", hl.dsp.exec_cmd(grimblast .. " area   - | $cwebp -o ~/Pictures/area_$(date +%Y-%m-%d-%H%M%S).webp   -- -"))
+hl.bind(                    "Print",           hl.dsp.exec_cmd(grimblast .. " screen - | " .. cwebp .. " -o ~/Pictures/screen_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
+hl.bind(mainMod .. " + " .. "Print",           hl.dsp.exec_cmd(grimblast .. " output - | " .. cwebp .. " -o ~/Pictures/output_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
+hl.bind(                    "SHIFT + Print",   hl.dsp.exec_cmd(grimblast .. " active - | " .. cwebp .. " -o ~/Pictures/active_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
+hl.bind(                    "CONTROL + Print", hl.dsp.exec_cmd(grimblast .. " area   - | " .. cwebp .. " -o ~/Pictures/area_$(date +%Y-%m-%d-%H%M%S).webp   -- -"))
 
 -- Rofi
 local findUserDirs = os.getenv("HOME") .. "/.config/hypr/find-user-dirs.sh"
