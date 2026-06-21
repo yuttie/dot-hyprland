@@ -59,7 +59,33 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("systemctl --user import-environment " .. env_vars_to_import .. " " .. my_env_vars_to_import)
     hl.exec_cmd("dbus-update-activation-environment --systemd " .. env_vars_to_import .. " " .. my_env_vars_to_import)
 
-    -- Autostart
+    -- Wallpaper
+    hl.exec_cmd("hyprpaper")
+
+    -- Idle daemon
+    hl.exec_cmd("hypridle")
+
+    -- Polkit agent
+    hl.exec_cmd("sh -c '[ -x /usr/libexec/hyprpolkitagent ] && exec /usr/libexec/hyprpolkitagent || exec /usr/lib/hyprpolkitagent/hyprpolkitagent'")
+
+    hl.exec_cmd("fcitx5 -dr")
+    hl.exec_cmd("waybar")
+
+    -- Settings for Gnome apps
+    local gnome_schema = "org.gnome.desktop.interface"
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " color-scheme 'prefer-light'")  -- Valid values are “default”, “prefer-dark”, “prefer-light”
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " icon-theme 'WhiteSur-light'")
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " gtk-theme 'WhiteSur-Light'")
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " gtk-key-theme 'Emacs'")
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " font-name 'Sans 10'")
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " monospace-font-name 'Monospace 10'")
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " cursor-theme 'Breeze'")
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " cursor-size '32'")
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " font-antialiasing 'rgba'")
+    hl.exec_cmd("gsettings set " .. gnome_schema .. " font-hinting 'none'")
+    hl.exec_cmd("gsettings set org.gnome.settings-daemon.plugins.xsettings overrides \"{'Gtk/IMModule':<'fcitx'>}\"")
+
+    -- Apps
     hl.exec_cmd("xrdb -load ~/.Xresources")
     hl.exec_cmd("pasystray")
     hl.exec_cmd("nm-applet --indicator")
@@ -68,32 +94,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("1password --silent")
     hl.exec_cmd("slack --startup")
 end)
-
--- Wallpaper
-hl.exec_cmd("pidof hyprpaper || hyprpaper")
-
--- Idle daemon
-hl.exec_cmd("pidof hypridle || hypridle")
-
--- Polkit agent
-hl.exec_cmd("pidof hyprpolkitagent || sh -c '[ -x /usr/libexec/hyprpolkitagent ] && exec /usr/libexec/hyprpolkitagent || exec /usr/lib/hyprpolkitagent/hyprpolkitagent'")
-
-hl.exec_cmd("pidof fcitx5 || fcitx5 -dr")
-hl.exec_cmd("pidof waybar || waybar")
-
--- Settings for Gnome apps
-local gnome_schema = "org.gnome.desktop.interface"
-hl.exec_cmd("gsettings set " .. gnome_schema .. " color-scheme 'prefer-light'")  -- Valid values are “default”, “prefer-dark”, “prefer-light”
-hl.exec_cmd("gsettings set " .. gnome_schema .. " icon-theme 'WhiteSur-light'")
-hl.exec_cmd("gsettings set " .. gnome_schema .. " gtk-theme 'WhiteSur-Light'")
-hl.exec_cmd("gsettings set " .. gnome_schema .. " gtk-key-theme 'Emacs'")
-hl.exec_cmd("gsettings set " .. gnome_schema .. " font-name 'Sans 10'")
-hl.exec_cmd("gsettings set " .. gnome_schema .. " monospace-font-name 'Monospace 10'")
-hl.exec_cmd("gsettings set " .. gnome_schema .. " cursor-theme 'Breeze'")
-hl.exec_cmd("gsettings set " .. gnome_schema .. " cursor-size '32'")
-hl.exec_cmd("gsettings set " .. gnome_schema .. " font-antialiasing 'rgba'")
-hl.exec_cmd("gsettings set " .. gnome_schema .. " font-hinting 'none'")
-hl.exec_cmd("gsettings set org.gnome.settings-daemon.plugins.xsettings overrides \"{'Gtk/IMModule':<'fcitx'>}\"")
 
 
 -------------------------------
