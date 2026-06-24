@@ -390,51 +390,54 @@ hl.config({
 ---------------------
 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
+local function bind(keys, dispatcher)
+    return hl.bind(table.concat(keys, " + "), dispatcher)
+end
 
 -- Launch app
-hl.bind(mainMod .. " + " .. "semicolon",       hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + " .. "E",               hl.dsp.exec_cmd(editor))
-hl.bind(mainMod .. " + " .. "W",               hl.dsp.exec_cmd(webbrowser))
-hl.bind(mainMod .. " + " .. "CONTROL + W",     hl.dsp.exec_cmd(webbrowser_private))
-hl.bind(mainMod .. " + " .. "SHIFT + W",       hl.dsp.exec_cmd(subwebbrowser))
-hl.bind(mainMod .. " + " .. "R",               hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + " .. "Zenkaku_Hankaku", hl.dsp.exec_cmd("killall fcitx5; fcitx5 -dr"))
+bind({mainMod, "semicolon"},       hl.dsp.exec_cmd(terminal))
+bind({mainMod, "E"},               hl.dsp.exec_cmd(editor))
+bind({mainMod, "W"},               hl.dsp.exec_cmd(webbrowser))
+bind({mainMod, "CONTROL", "W"},    hl.dsp.exec_cmd(webbrowser_private))
+bind({mainMod, "SHIFT", "W"},      hl.dsp.exec_cmd(subwebbrowser))
+bind({mainMod, "R"},               hl.dsp.exec_cmd(menu))
+bind({mainMod, "Zenkaku_Hankaku"}, hl.dsp.exec_cmd("killall fcitx5; fcitx5 -dr"))
 
 -- Session
-hl.bind(mainMod .. " + " .. "CONTROL + X", hl.dsp.exec_cmd("loginctl lock-session"))
-hl.bind(mainMod .. " + " .. "CONTROL + Q", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+bind({mainMod, "CONTROL", "X"}, hl.dsp.exec_cmd("loginctl lock-session"))
+bind({mainMod, "CONTROL", "Q"}, hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 
 -- Monitor
-hl.bind(mainMod .. " + " .. "comma",           hl.dsp.focus({ monitor = "l" }))
-hl.bind(mainMod .. " + " .. "period",          hl.dsp.focus({ monitor = "r" }))
-hl.bind(mainMod .. " + " .. "CONTROL + Left",  hl.dsp.focus({ monitor = "l" }))
-hl.bind(mainMod .. " + " .. "CONTROL + Right", hl.dsp.focus({ monitor = "r" }))
-hl.bind(mainMod .. " + " .. "CONTROL + Up",    hl.dsp.focus({ monitor = "u" }))
-hl.bind(mainMod .. " + " .. "CONTROL + Down",  hl.dsp.focus({ monitor = "d" }))
+bind({mainMod, "comma"},            hl.dsp.focus({ monitor = "l" }))
+bind({mainMod, "period"},           hl.dsp.focus({ monitor = "r" }))
+bind({mainMod, "CONTROL", "Left"},  hl.dsp.focus({ monitor = "l" }))
+bind({mainMod, "CONTROL", "Right"}, hl.dsp.focus({ monitor = "r" }))
+bind({mainMod, "CONTROL", "Up"},    hl.dsp.focus({ monitor = "u" }))
+bind({mainMod, "CONTROL", "Down"},  hl.dsp.focus({ monitor = "d" }))
 
 -- Workspace
-hl.bind(mainMod .. " + " .. "B",                       hl.dsp.focus({ workspace = "previous_per_monitor" }))
-hl.bind(mainMod .. " + " .. "SHIFT + Tab",             hl.dsp.focus({ workspace = "m-1" }))
-hl.bind(mainMod .. " + " .. "Tab",                     hl.dsp.focus({ workspace = "m+1" }))
-hl.bind(mainMod .. " + " .. "Left",                    hl.dsp.focus({ workspace = "m-1" }))
-hl.bind(mainMod .. " + " .. "Right",                   hl.dsp.focus({ workspace = "m+1" }))
-hl.bind(mainMod .. " + " .. "mouse_left",              hl.dsp.focus({ workspace = "m-1" }))
-hl.bind(mainMod .. " + " .. "mouse_right",             hl.dsp.focus({ workspace = "m+1" }))
-hl.bind(mainMod .. " + " .. "V",                       hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/switch-workspace.sh"))
-hl.bind(mainMod .. " + " .. "SHIFT + R",               hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/rename-workspace.sh"))
-hl.bind(mainMod .. " + " .. "SHIFT + comma",           hl.dsp.workspace.move({ monitor = "l" }))
-hl.bind(mainMod .. " + " .. "SHIFT + period",          hl.dsp.workspace.move({ monitor = "r" }))
-hl.bind(mainMod .. " + " .. "SHIFT + CONTROL + Left",  hl.dsp.workspace.move({ monitor = "l" }))
-hl.bind(mainMod .. " + " .. "SHIFT + CONTROL + Right", hl.dsp.workspace.move({ monitor = "r" }))
-hl.bind(mainMod .. " + " .. "SHIFT + CONTROL + Up",    hl.dsp.workspace.move({ monitor = "u" }))
-hl.bind(mainMod .. " + " .. "SHIFT + CONTROL + Down",  hl.dsp.workspace.move({ monitor = "d" }))
+bind({mainMod, "B"},                         hl.dsp.focus({ workspace = "previous_per_monitor" }))
+bind({mainMod, "SHIFT", "Tab"},              hl.dsp.focus({ workspace = "m-1" }))
+bind({mainMod, "Tab"},                       hl.dsp.focus({ workspace = "m+1" }))
+bind({mainMod, "Left"},                      hl.dsp.focus({ workspace = "m-1" }))
+bind({mainMod, "Right"},                     hl.dsp.focus({ workspace = "m+1" }))
+bind({mainMod, "mouse_left"},                hl.dsp.focus({ workspace = "m-1" }))
+bind({mainMod, "mouse_right"},               hl.dsp.focus({ workspace = "m+1" }))
+bind({mainMod, "V"},                         hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/switch-workspace.sh"))
+bind({mainMod, "SHIFT", "R"},                hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/rename-workspace.sh"))
+bind({mainMod, "SHIFT", "comma"},            hl.dsp.workspace.move({ monitor = "l" }))
+bind({mainMod, "SHIFT", "period"},           hl.dsp.workspace.move({ monitor = "r" }))
+bind({mainMod, "SHIFT", "CONTROL", "Left"},  hl.dsp.workspace.move({ monitor = "l" }))
+bind({mainMod, "SHIFT", "CONTROL", "Right"}, hl.dsp.workspace.move({ monitor = "r" }))
+bind({mainMod, "SHIFT", "CONTROL", "Up"},    hl.dsp.workspace.move({ monitor = "u" }))
+bind({mainMod, "SHIFT", "CONTROL", "Down"},  hl.dsp.workspace.move({ monitor = "d" }))
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
 -- Dwindle layout
-hl.bind(mainMod .. " + " .. "slash", hl.dsp.layout("togglesplit"))
+bind({mainMod, "slash"}, hl.dsp.layout("togglesplit"))
 
 -- Group
-hl.bind(mainMod .. " + " .. "T", function()
+bind({mainMod, "T"}, function()
     local w = hl.get_active_window()
     if w == nil then
         return
@@ -443,7 +446,7 @@ hl.bind(mainMod .. " + " .. "T", function()
         hl.dispatch(hl.dsp.group.toggle())
     end
 end)
-hl.bind(mainMod .. " + " .. "CONTROL + T", function()
+bind({mainMod, "CONTROL", "T"}, function()
     local w = hl.get_active_window()
     if w == nil then
         return
@@ -452,45 +455,45 @@ hl.bind(mainMod .. " + " .. "CONTROL + T", function()
         hl.dispatch(hl.dsp.group.toggle())
     end
 end)
-hl.bind(mainMod .. " + " .. "P",           hl.dsp.group.prev())
-hl.bind(mainMod .. " + " .. "N",           hl.dsp.group.next())
-hl.bind(mainMod .. " + " .. "mouse_down",  hl.dsp.group.prev())
-hl.bind(mainMod .. " + " .. "mouse_up",    hl.dsp.group.next())
-hl.bind(mainMod .. " + " .. "SHIFT + P",   hl.dsp.group.move_window({ forward = false }))
-hl.bind(mainMod .. " + " .. "SHIFT + N",   hl.dsp.group.move_window({ forward = true }))
+bind({mainMod, "P"},          hl.dsp.group.prev())
+bind({mainMod, "N"},          hl.dsp.group.next())
+bind({mainMod, "mouse_down"}, hl.dsp.group.prev())
+bind({mainMod, "mouse_up"},   hl.dsp.group.next())
+bind({mainMod, "SHIFT", "P"}, hl.dsp.group.move_window({ forward = false }))
+bind({mainMod, "SHIFT", "N"}, hl.dsp.group.move_window({ forward = true }))
 
 -- Focused window
-hl.bind(mainMod .. " + " .. "CONTROL + C",     hl.dsp.window.close())
-hl.bind(mainMod .. " + " .. "space",           hl.dsp.window.cycle_next({ floating = true }))
-hl.bind(mainMod .. " + " .. "space",           hl.dsp.window.alter_zorder({ mode = "top" }))
-hl.bind(mainMod .. " + " .. "CONTROL + space", hl.dsp.window.cycle_next({ tiled = true }))
-hl.bind(mainMod .. " + " .. "SHIFT + space",   hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + " .. "F",               hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
-hl.bind(mainMod .. " + " .. "CONTROL + F",     hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
-hl.bind(mainMod .. " + " .. "SHIFT + S",       hl.dsp.window.pin())
+bind({mainMod, "CONTROL", "C"},     hl.dsp.window.close())
+bind({mainMod, "space"},            hl.dsp.window.cycle_next({ floating = true }))
+bind({mainMod, "space"},            hl.dsp.window.alter_zorder({ mode = "top" }))
+bind({mainMod, "CONTROL", "space"}, hl.dsp.window.cycle_next({ tiled = true }))
+bind({mainMod, "SHIFT", "space"},   hl.dsp.window.float({ action = "toggle" }))
+bind({mainMod, "F"},                hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+bind({mainMod, "CONTROL", "F"},     hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+bind({mainMod, "SHIFT", "S"},       hl.dsp.window.pin())
 
 -- Move focus
-hl.bind(mainMod .. " + " .. "H", hl.dsp.focus({ direction = "l" }))
-hl.bind(mainMod .. " + " .. "L", hl.dsp.focus({ direction = "r" }))
-hl.bind(mainMod .. " + " .. "K", hl.dsp.focus({ direction = "u" }))
-hl.bind(mainMod .. " + " .. "J", hl.dsp.focus({ direction = "d" }))
+bind({mainMod, "H"}, hl.dsp.focus({ direction = "l" }))
+bind({mainMod, "L"}, hl.dsp.focus({ direction = "r" }))
+bind({mainMod, "K"}, hl.dsp.focus({ direction = "u" }))
+bind({mainMod, "J"}, hl.dsp.focus({ direction = "d" }))
 
 -- Move focused window
-hl.bind(mainMod .. " + " .. "SHIFT + H",   hl.dsp.window.move({ direction = "l" }))
-hl.bind(mainMod .. " + " .. "SHIFT + L",   hl.dsp.window.move({ direction = "r" }))
-hl.bind(mainMod .. " + " .. "SHIFT + K",   hl.dsp.window.move({ direction = "u" }))
-hl.bind(mainMod .. " + " .. "SHIFT + J",   hl.dsp.window.move({ direction = "d" }))
-hl.bind(mainMod .. " + " .. "CONTROL + H", hl.dsp.window.move({ direction = "l", group_aware = true }))
-hl.bind(mainMod .. " + " .. "CONTROL + L", hl.dsp.window.move({ direction = "r", group_aware = true }))
-hl.bind(mainMod .. " + " .. "CONTROL + K", hl.dsp.window.move({ direction = "u", group_aware = true }))
-hl.bind(mainMod .. " + " .. "CONTROL + J", hl.dsp.window.move({ direction = "d", group_aware = true }))
-hl.bind(mainMod .. " + " .. "M",           hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace-silent.sh"))
-hl.bind(mainMod .. " + " .. "SHIFT + M",   hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace.sh"))
+bind({mainMod, "SHIFT", "H"},   hl.dsp.window.move({ direction = "l" }))
+bind({mainMod, "SHIFT", "L"},   hl.dsp.window.move({ direction = "r" }))
+bind({mainMod, "SHIFT", "K"},   hl.dsp.window.move({ direction = "u" }))
+bind({mainMod, "SHIFT", "J"},   hl.dsp.window.move({ direction = "d" }))
+bind({mainMod, "CONTROL", "H"}, hl.dsp.window.move({ direction = "l", group_aware = true }))
+bind({mainMod, "CONTROL", "L"}, hl.dsp.window.move({ direction = "r", group_aware = true }))
+bind({mainMod, "CONTROL", "K"}, hl.dsp.window.move({ direction = "u", group_aware = true }))
+bind({mainMod, "CONTROL", "J"}, hl.dsp.window.move({ direction = "d", group_aware = true }))
+bind({mainMod, "M"},            hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace-silent.sh"))
+bind({mainMod, "SHIFT", "M"},   hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace.sh"))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
-hl.bind(mainMod .. " + " .. "mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mainMod .. " + " .. "mouse:273", hl.dsp.window.resize(), { mouse = true })
-hl.bind(mainMod .. " + " .. "mouse:274", hl.dsp.window.close())
+bind({mainMod, "mouse:272"}, hl.dsp.window.drag(), { mouse = true })
+bind({mainMod, "mouse:273"}, hl.dsp.window.resize(), { mouse = true })
+bind({mainMod, "mouse:274"}, hl.dsp.window.close())
 
 -- Magnifier
 local function zoom(r)
@@ -498,44 +501,44 @@ local function zoom(r)
     hl.config({ cursor = { zoom_factor = math.max(factor * r, 1) } })
 end
 local zoom_coef = 1.41421356
-hl.bind(mainMod .. " + ".. "Page_Up",              function() zoom(zoom_coef)     end)
-hl.bind(mainMod .. " + ".. "Page_Down",            function() zoom(1 / zoom_coef) end)
-hl.bind(mainMod .. " + ".. "Equal",                function() zoom(zoom_coef)     end)
-hl.bind(mainMod .. " + ".. "Minus",                function() zoom(1 / zoom_coef) end)
-hl.bind(mainMod .. " + ".. "CONTROL + mouse_up",   function() zoom(1 / zoom_coef) end)
-hl.bind(mainMod .. " + ".. "CONTROL + mouse_down", function() zoom(zoom_coef)     end)
+bind({mainMod, "Page_Up"},               function() zoom(zoom_coef)     end)
+bind({mainMod, "Page_Down"},             function() zoom(1 / zoom_coef) end)
+bind({mainMod, "Equal"},                 function() zoom(zoom_coef)     end)
+bind({mainMod, "Minus"},                 function() zoom(1 / zoom_coef) end)
+bind({mainMod, "CONTROL", "mouse_up"},   function() zoom(1 / zoom_coef) end)
+bind({mainMod, "CONTROL", "mouse_down"}, function() zoom(zoom_coef)     end)
 hl.gesture({ fingers = 3, direction = "up",   mods = mainMod, action = function() zoom(zoom_coef)     end })
 hl.gesture({ fingers = 3, direction = "down", mods = mainMod, action = function() zoom(1 / zoom_coef) end })
 
 -- Screen capture
 local grimblast = "grimblast --notify save"
 local cwebp = "cwebp -lossless -q 100 -m 6 -mt"
-hl.bind(                    "Print",           hl.dsp.exec_cmd(grimblast .. " screen - | " .. cwebp .. " -o ~/Pictures/screen_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
-hl.bind(mainMod .. " + " .. "Print",           hl.dsp.exec_cmd(grimblast .. " output - | " .. cwebp .. " -o ~/Pictures/output_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
-hl.bind(                    "SHIFT + Print",   hl.dsp.exec_cmd(grimblast .. " active - | " .. cwebp .. " -o ~/Pictures/active_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
-hl.bind(                    "CONTROL + Print", hl.dsp.exec_cmd(grimblast .. " area   - | " .. cwebp .. " -o ~/Pictures/area_$(date +%Y-%m-%d-%H%M%S).webp   -- -"))
+bind({         "Print"},            hl.dsp.exec_cmd(grimblast .. " screen - | " .. cwebp .. " -o ~/Pictures/screen_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
+bind({mainMod, "Print"},            hl.dsp.exec_cmd(grimblast .. " output - | " .. cwebp .. " -o ~/Pictures/output_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
+bind({         "SHIFT", "Print"},   hl.dsp.exec_cmd(grimblast .. " active - | " .. cwebp .. " -o ~/Pictures/active_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
+bind({         "CONTROL", "Print"}, hl.dsp.exec_cmd(grimblast .. " area   - | " .. cwebp .. " -o ~/Pictures/area_$(date +%Y-%m-%d-%H%M%S).webp   -- -"))
 
 -- Rofi
 local findUserDirs = os.getenv("HOME") .. "/.config/hypr/find-user-dirs.sh"
 local findPapers = os.getenv("HOME") .. "/.config/hypr/find-papers.sh"
-hl.bind(mainMod .. " + " .. "SHIFT + F",   hl.dsp.exec_cmd(rofi .. " -show window"))
-hl.bind(mainMod .. " + " .. "SHIFT + D",   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a directory\"); if [ -n \"$path\" ]; then xdg-open \"$path\"; fi"))
-hl.bind(mainMod .. " + " .. "SHIFT + T",   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a terminal with a directory\"); if [ -n \"$path\" ]; then " .. terminal .. " --working-directory \"$path\"; fi"))
-hl.bind(mainMod .. " + " .. "CONTROL + P", hl.dsp.exec_cmd("path=$(" .. findPapers   .. " | " .. rofi .. " -dmenu -i -p \"Open a paper\" -theme-str \"window { width: 50%; }\"); if [ -n \"$path\" ]; then xdg-open \"$HOME/Literature/$path\"; fi"))
+bind({mainMod, "SHIFT", "F"},   hl.dsp.exec_cmd(rofi .. " -show window"))
+bind({mainMod, "SHIFT", "D"},   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a directory\"); if [ -n \"$path\" ]; then xdg-open \"$path\"; fi"))
+bind({mainMod, "SHIFT", "T"},   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a terminal with a directory\"); if [ -n \"$path\" ]; then " .. terminal .. " --working-directory \"$path\"; fi"))
+bind({mainMod, "CONTROL", "P"}, hl.dsp.exec_cmd("path=$(" .. findPapers   .. " | " .. rofi .. " -dmenu -i -p \"Open a paper\" -theme-str \"window { width: 50%; }\"); if [ -n \"$path\" ]; then xdg-open \"$HOME/Literature/$path\"; fi"))
 
-hl.bind(mainMod .. " + " .. "D", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/show-display-menu.sh"))
+bind({mainMod, "D"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/show-display-menu.sh"))
 
 -- swaync
-hl.bind(mainMod .. " + " .. "CONTROL + N", hl.dsp.exec_cmd("swaync-client -t"))
+bind({mainMod, "CONTROL", "N"}, hl.dsp.exec_cmd("swaync-client -t"))
 
 -- Audio control
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"),     { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ toggle"), { locked = true, repeating = true })
+bind({"XF86AudioRaiseVolume"}, hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"),     { locked = true, repeating = true })
+bind({"XF86AudioLowerVolume"}, hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),     { locked = true, repeating = true })
+bind({"XF86AudioMute"},        hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"),     { locked = true, repeating = true })
+bind({"XF86AudioMicMute"},     hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ toggle"), { locked = true, repeating = true })
 
 -- Debug
-hl.bind(mainMod .. " + " .. "F12", hl.dsp.exec_cmd("hyprctl -j activewindow | wl-copy"))
+bind({mainMod, "F12"}, hl.dsp.exec_cmd("hyprctl -j activewindow | wl-copy"))
 
 
 --------------------------------
