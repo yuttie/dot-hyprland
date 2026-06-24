@@ -526,7 +526,7 @@ bind({mainMod, "SHIFT", "D"},   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " |
 bind({mainMod, "SHIFT", "T"},   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a terminal with a directory\"); if [ -n \"$path\" ]; then " .. terminal .. " --working-directory \"$path\"; fi"))
 bind({mainMod, "CONTROL", "P"}, hl.dsp.exec_cmd("path=$(" .. findPapers   .. " | " .. rofi .. " -dmenu -i -p \"Open a paper\" -theme-str \"window { width: 50%; }\"); if [ -n \"$path\" ]; then xdg-open \"$HOME/Literature/$path\"; fi"))
 
-bind({mainMod, "D"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/show-display-menu.sh"))
+bind({mainMod, "CONTROL", "D"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/show-display-menu.sh"))
 
 -- swaync
 bind({mainMod, "CONTROL", "N"}, hl.dsp.exec_cmd("swaync-client -t"))
