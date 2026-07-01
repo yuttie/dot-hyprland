@@ -145,6 +145,7 @@ hl.config({
 })
 
 hl.permission({ binary = "/usr/bin/hyprlock", type = "screencopy", mode = "allow" })
+hl.permission({ binary = "/usr/bin/wl-mirror", type = "screencopy", mode = "allow" })
 hl.permission({ binary = "/usr/bin/grim", type = "screencopy", mode = "allow" })
 hl.permission({ binary = "/usr/bin/grimblast", type = "screencopy", mode = "allow" })
 hl.permission({ binary = "/usr/libexec/xdg-desktop-portal-hyprland", type = "screencopy", mode = "allow" })
