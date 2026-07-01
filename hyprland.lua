@@ -437,6 +437,10 @@ bind({mainMod, "SHIFT", "CONTROL", "Up"},    hl.dsp.workspace.move({ monitor = "
 bind({mainMod, "SHIFT", "CONTROL", "Down"},  hl.dsp.workspace.move({ monitor = "d" }))
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
+-- Special workspace
+bind({mainMod, "C"}, hl.dsp.window.move({ workspace = "special" }))
+bind({mainMod, "S"}, hl.dsp.workspace.toggle_special("special"))
+
 -- Dwindle layout
 bind({mainMod, "slash"}, hl.dsp.layout("togglesplit"))
 
