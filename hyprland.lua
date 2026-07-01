@@ -180,6 +180,7 @@ hl.config({
 
     decoration = {
         rounding = 16,
+        dim_special = 0.4,
 
         -- Change transparency of focused and unfocused windows
         active_opacity   = 1.0,
@@ -664,6 +665,9 @@ hl.layer_rule({ match = { namespace = "rofi" }, dim_around = true })
 hl.layer_rule({ match = { namespace = "rofi" }, blur = true })
 hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
 hl.layer_rule({ match = { namespace = "swaync-control-center" }, dim_around = true })
+
+-- Workspace rules
+hl.workspace_rule({ workspace = "s[true]", gaps_in = 32, gaps_out = 64 })
 
 
 ----------------------------
