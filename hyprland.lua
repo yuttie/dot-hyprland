@@ -129,6 +129,9 @@ hl.env("QT5_IM_MODULE", "fcitx")
 hl.env("SDL_IM_MODULE", "fcitx")
 hl.env("GLFW_IM_MODULE", "ibus")
 
+-- App-specific variables
+hl.env("GQ_NEW_INSTANCE", "yes")
+
 
 -----------------------
 ----- PERMISSIONS -----
