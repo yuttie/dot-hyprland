@@ -131,6 +131,7 @@ hl.env("GLFW_IM_MODULE", "ibus")
 
 -- App-specific variables
 hl.env("GQ_NEW_INSTANCE", "yes")
+hl.env("OOO_DISABLE_RECOVERY", "1")
 
 
 -----------------------
