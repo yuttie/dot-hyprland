@@ -264,8 +264,8 @@ hl.curve("easy",           { type = "spring", mass = 1, stiffness = 71.2633, dam
 
 hl.animation({ leaf = "global",        enabled = true,  speed = 5,    bezier = "default" })
 hl.animation({ leaf = "border",        enabled = false })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 3,    bezier = "easeOutQuint" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 3,    bezier = "easeOutQuint" })
+hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 3,    bezier = "easeOutQuint", style = "popin 90%" })
+hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 3,    bezier = "easeOutQuint", style = "popin 90%" })
 hl.animation({ leaf = "windowsMove",   enabled = true,  speed = 3,    bezier = "easeOutQuint" })
 hl.animation({ leaf = "layers",        enabled = true,  speed = 3.81, bezier = "easeOutQuint" })
 hl.animation({ leaf = "layersIn",      enabled = true,  speed = 4,    bezier = "easeOutQuint", style = "fade" })
