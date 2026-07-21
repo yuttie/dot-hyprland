@@ -667,10 +667,9 @@ hl.window_rule({ idle_inhibit = "focus", match = { class = "^(mpv)$" } })
 hl.window_rule({ no_blur = true, match = { class = "^()$", title = "^()$" } })  -- For Google Chrome's menus
 
 -- Layer rules
-hl.layer_rule({ match = { namespace = "rofi" }, dim_around = true })
-hl.layer_rule({ match = { namespace = "rofi" }, blur = true })
 hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
-hl.layer_rule({ match = { namespace = "swaync-control-center" }, dim_around = true })
+hl.layer_rule({ match = { namespace = "rofi" }, dim_around = true, blur = true, animation = "fade" })
+hl.layer_rule({ match = { namespace = "swaync-control-center" }, dim_around = true, animation = "slide right" })
 
 -- Workspace rules
 hl.workspace_rule({ workspace = "s[true]", gaps_in = 32, gaps_out = 64 })
