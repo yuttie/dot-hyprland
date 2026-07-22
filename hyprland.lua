@@ -524,8 +524,15 @@ bind({mainMod, "Equal"},                 function() zoom(zoom_coef)     end)
 bind({mainMod, "Minus"},                 function() zoom(1 / zoom_coef) end)
 bind({mainMod, "CONTROL", "mouse_up"},   function() zoom(zoom_coef)     end)
 bind({mainMod, "CONTROL", "mouse_down"}, function() zoom(1 / zoom_coef) end)
-hl.gesture({ fingers = 3, direction = "up",   mods = mainMod, action = function() zoom(zoom_coef)     end })
-hl.gesture({ fingers = 3, direction = "down", mods = mainMod, action = function() zoom(1 / zoom_coef) end })
+hl.gesture({
+    fingers = 3,
+    direction = "vertical",
+    mods = mainMod,
+    action = {
+        start  = function(e) zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
+        update = function(e) zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
+    },
+})
 
 -- Screen capture
 local grimblast = "grimblast --notify save"
