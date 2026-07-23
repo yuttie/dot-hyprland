@@ -395,6 +395,18 @@ hl.config({
 })
 
 
+------------------
+---- XWayland ----
+------------------
+
+hl.config({
+    xwayland = {
+        enabled = true,
+        force_zero_scaling = true,
+    },
+})
+
+
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
