@@ -55,7 +55,7 @@ local menu       = rofi .. " -modi drun##run -show drun -show-icons -drun-show-a
 hl.on("hyprland.start", function()
     -- Import specific environment variables into the systemd user session and dbus
     local env_vars_to_import = "DISPLAY WAYLAND_DISPLAY"
-    local my_env_vars_to_import = "XCURSOR_THEME XCURSOR_SIZE HYPRCURSOR_SIZE XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XDG_CURRENT_SESSION XDG_SESSION_DESKTOP LIBSEAT_BACKEND GDK_BACKEND QT_QPA_PLATFORM SDL_VIDEODRIVER QT_QPA_PLATFORMTHEME GDK_DPI_SCALE QT_SCALE_FACTOR MOZ_ENABLE_WAYLAND WINIT_UNIX_BACKEND _JAVA_AWT_WM_NONREPARENTING XMODIFIERS QT_IM_MODULE QT_IM_MODULES QT5_IM_MODULE SDL_IM_MODULE GLFW_IM_MODULE"
+    local my_env_vars_to_import = "XCURSOR_THEME XCURSOR_SIZE HYPRCURSOR_SIZE XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XDG_CURRENT_SESSION XDG_SESSION_DESKTOP LIBSEAT_BACKEND GDK_BACKEND QT_QPA_PLATFORM SDL_VIDEODRIVER QT_QPA_PLATFORMTHEME MOZ_ENABLE_WAYLAND WINIT_UNIX_BACKEND _JAVA_AWT_WM_NONREPARENTING XMODIFIERS QT_IM_MODULE QT_IM_MODULES QT5_IM_MODULE SDL_IM_MODULE GLFW_IM_MODULE"
     hl.exec_cmd("systemctl --user import-environment " .. env_vars_to_import .. " " .. my_env_vars_to_import)
     hl.exec_cmd("dbus-update-activation-environment --systemd " .. env_vars_to_import .. " " .. my_env_vars_to_import)
 
@@ -115,8 +115,6 @@ hl.env("GDK_BACKEND", "wayland,x11,*")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("SDL_VIDEODRIVER", "wayland,x11")
 hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")  -- Has effect also for Qt6 (no need to be qt6ct)
-hl.env("GDK_DPI_SCALE", "1.33333")
-hl.env("QT_SCALE_FACTOR", "1.33333")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 hl.env("WINIT_UNIX_BACKEND", "x11")
 hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
@@ -165,10 +163,10 @@ hl.permission({ binary = "/usr/libexec/xdg-desktop-portal-hyprland", type = "scr
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
-        gaps_in  = 8,
-        gaps_out = 16,
+        gaps_in  = 6,
+        gaps_out = 12,
 
-        border_size = 8,
+        border_size = 6,
 
         col = {
             active_border   = { colors = {"rgba(33ccffee)", "rgba(33ff7aee)"}, angle = 45 },
@@ -183,7 +181,7 @@ hl.config({
     },
 
     decoration = {
-        rounding = 16,
+        rounding = 12,
         dim_special = 0.5,
         dim_around = 0.5,
 
@@ -193,10 +191,10 @@ hl.config({
 
         shadow = {
             enabled      = true,
-            range        = 128,
+            range        = 96,
             render_power = 2,
             color        = "rgba(00000066)",
-            offset       = {0, 24},
+            offset       = {0, 18},
             scale        = 0.95,
         },
 
@@ -225,14 +223,14 @@ hl.config({
         },
 
         groupbar = {
-            font_size = 16,
-            height = 24,
-            indicator_gap = -24,
-            indicator_height = 24,
+            font_size = 12,
+            height = 18,
+            indicator_gap = -18,
+            indicator_height = 18,
             render_titles = true,
             text_offset = 0,
-            text_padding = 16,
-            rounding = 12,
+            text_padding = 12,
+            rounding = 9,
             round_only_edges = true,
             text_color = "rgba(000000cc)",
             text_color_inactive = "rgba(00000077)",
@@ -240,8 +238,8 @@ hl.config({
                 active = "rgba(ffffff88)",
                 inactive = "rgba(ffffff33)",
             },
-            gaps_in = 4,
-            gaps_out = 8,
+            gaps_in = 3,
+            gaps_out = 6,
             keep_upper_gap = false,
             blur = true,
         },
@@ -681,7 +679,7 @@ hl.layer_rule({ match = { namespace = "rofi" }, dim_around = true, blur = true, 
 hl.layer_rule({ match = { namespace = "swaync-control-center" }, dim_around = true, animation = "slide right" })
 
 -- Workspace rules
-hl.workspace_rule({ workspace = "s[true]", gaps_in = 32, gaps_out = 64 })
+hl.workspace_rule({ workspace = "s[true]", gaps_in = 24, gaps_out = 48 })
 
 
 ----------------------------
