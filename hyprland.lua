@@ -527,7 +527,7 @@ local function zoom(r)
     local factor = hl.get_config("cursor.zoom_factor")
     hl.config({ cursor = { zoom_factor = math.max(factor * r, 1) } })
 end
-local zoom_coef = math.pow(2, 1 / 2)
+local zoom_coef = 2 ^ (1 / 2)
 bind({mainMod, "Page_Up"},               function() zoom(zoom_coef)     end)
 bind({mainMod, "Page_Down"},             function() zoom(1 / zoom_coef) end)
 bind({mainMod, "Equal"},                 function() zoom(zoom_coef)     end)
