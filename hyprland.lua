@@ -205,6 +205,11 @@ hl.config({
             ignore_opacity = true,
             noise          = 0.02,
         },
+
+        motion_blur = {
+            enabled = false,
+            samples = 30,
+        },
     },
 
     group = {
