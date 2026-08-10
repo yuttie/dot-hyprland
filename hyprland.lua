@@ -605,6 +605,7 @@ bind({         "Print"},            hl.dsp.exec_cmd(grimblast .. " screen - | " 
 bind({mainMod, "Print"},            hl.dsp.exec_cmd(grimblast .. " output - | " .. cwebp .. " -o ~/Pictures/output_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
 bind({         "SHIFT", "Print"},   hl.dsp.exec_cmd(grimblast .. " active - | " .. cwebp .. " -o ~/Pictures/active_$(date +%Y-%m-%d-%H%M%S).webp -- -"))
 bind({         "CONTROL", "Print"}, hl.dsp.exec_cmd(grimblast .. " area   - | " .. cwebp .. " -o ~/Pictures/area_$(date +%Y-%m-%d-%H%M%S).webp   -- -"))
+bind({         "CONTROL", "SHIFT", "Print"}, hl.dsp.exec_cmd('grim -g "$(slurp)" -t ppm - | tesseract -l eng stdin stdout | wl-copy'))
 
 -- Rofi
 local findUserDirs = os.getenv("HOME") .. "/.config/hypr/find-user-dirs.sh"
