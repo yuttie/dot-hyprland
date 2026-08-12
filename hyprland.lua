@@ -685,6 +685,7 @@ hl.window_rule({ border_color = { colors = {"rgba(ccff33ee)", "rgba(ff7a33ee)"},
 
 -- Make some windows floating by default
 hl.window_rule({ float = true, match = { class = "^(org.gnome.Calculator)$" } })
+hl.window_rule({ float = true, match = { class = "^(org.pipewire.Helvum)$" } })
 hl.window_rule({ float = true, match = { title = "^(New Text Note — Okular)$" } })
 hl.window_rule({ float = true, match = { class = "^(blender-5.0)$" } })
 hl.window_rule({ float = true, match = { class = "^(wdisplays)$" } })
