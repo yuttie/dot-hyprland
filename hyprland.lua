@@ -60,7 +60,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd " .. env_vars_to_import .. " " .. my_env_vars_to_import)
 
     -- Wallpaper
-    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("swaybg --image ~/wallpaper --mode fill")
 
     -- Idle daemon
     hl.exec_cmd("hypridle")
