@@ -25,4 +25,9 @@ function M.disable(target)
     return true
 end
 
+---@param target string
+function M.enable(target)
+    hl.monitor({ output = target, disabled = false })
+end
+
 return M
