@@ -618,6 +618,7 @@ bind({mainMod, "SHIFT", "F"},   hl.dsp.exec_cmd(rofi .. " -show window"))
 bind({mainMod, "SHIFT", "D"},   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a directory\"); if [ -n \"$path\" ]; then xdg-open \"$path\"; fi"))
 bind({mainMod, "SHIFT", "T"},   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a terminal with a directory\"); if [ -n \"$path\" ]; then " .. terminal .. " --working-directory \"$path\"; fi"))
 bind({mainMod, "CONTROL", "P"}, hl.dsp.exec_cmd("path=$(" .. findPapers   .. " | " .. rofi .. " -dmenu -i -p \"Open a paper\" -theme-str \"window { width: 50%; }\"); if [ -n \"$path\" ]; then xdg-open \"$HOME/Literature/$path\"; fi"))
+bind({mainMod, "CONTROL", "R"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/eval_expr.sh"))
 
 bind({mainMod, "CONTROL", "D"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/show-display-menu.sh"))
 
