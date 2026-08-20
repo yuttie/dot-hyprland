@@ -65,6 +65,9 @@ hl.on("hyprland.start", function()
     -- Idle daemon
     hl.exec_cmd("hypridle")
 
+    -- CTM manager
+    hl.exec_cmd("hyprsunset")
+
     -- Polkit agent
     hl.exec_cmd("sh -c '[ -x /usr/libexec/hyprpolkitagent ] && exec /usr/libexec/hyprpolkitagent || exec /usr/lib/hyprpolkitagent/hyprpolkitagent'")
 
