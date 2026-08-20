@@ -14,11 +14,6 @@ end
 ---@return boolean ok
 function M.disable(target)
     if count_other_monitors(target) == 0 then
-        hl.notification.create({
-            text = ("Refusing to disable %s: no other active monitor found"):format(target),
-            timeout = 5000,
-            color = "rgb(ff5555)",
-        })
         return false
     end
     hl.monitor({ output = target, disabled = true })
