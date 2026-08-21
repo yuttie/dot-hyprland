@@ -766,4 +766,4 @@ local function get_hostname()
     return name
 end
 
-require("host_specific." .. get_hostname())
+require("host." .. get_hostname())
