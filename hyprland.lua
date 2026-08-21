@@ -479,15 +479,7 @@ bind({mainMod, "slash"}, hl.dsp.layout("togglesplit"))
 -- Group
 local group = require("lib.group")
 bind({mainMod, "T"}, group.group_active_window)
-bind({mainMod, "CONTROL", "T"}, function()
-    local w = hl.get_active_window()
-    if w == nil then
-        return
-    end
-    if w.group ~= nil then
-        hl.dispatch(hl.dsp.group.toggle())
-    end
-end)
+bind({mainMod, "CONTROL", "T"}, group.ungroup_active_window)
 bind({mainMod, "P"},          hl.dsp.group.prev())
 bind({mainMod, "N"},          hl.dsp.group.next())
 bind({mainMod, "mouse_up"},   hl.dsp.group.prev())
