@@ -521,24 +521,21 @@ bind({mainMod, "mouse:273"}, hl.dsp.window.resize(), { mouse = true })
 bind({mainMod, "mouse:274"}, hl.dsp.window.close())
 
 -- Magnifier
-local function zoom(r)
-    local factor = hl.get_config("cursor.zoom_factor")
-    hl.config({ cursor = { zoom_factor = math.max(factor * r, 1) } })
-end
+local cursor = require("lib.cursor")
 local zoom_coef = 2 ^ (1 / 2)
-bind({mainMod, "Page_Up"},               function() zoom(zoom_coef)     end)
-bind({mainMod, "Page_Down"},             function() zoom(1 / zoom_coef) end)
-bind({mainMod, "Equal"},                 function() zoom(zoom_coef)     end)
-bind({mainMod, "Minus"},                 function() zoom(1 / zoom_coef) end)
-bind({mainMod, "CONTROL", "mouse_up"},   function() zoom(zoom_coef)     end)
-bind({mainMod, "CONTROL", "mouse_down"}, function() zoom(1 / zoom_coef) end)
+bind({mainMod, "Page_Up"},               function() cursor.zoom(zoom_coef)     end)
+bind({mainMod, "Page_Down"},             function() cursor.zoom(1 / zoom_coef) end)
+bind({mainMod, "Equal"},                 function() cursor.zoom(zoom_coef)     end)
+bind({mainMod, "Minus"},                 function() cursor.zoom(1 / zoom_coef) end)
+bind({mainMod, "CONTROL", "mouse_up"},   function() cursor.zoom(zoom_coef)     end)
+bind({mainMod, "CONTROL", "mouse_down"}, function() cursor.zoom(1 / zoom_coef) end)
 hl.gesture({
     fingers = 3,
     direction = "vertical",
     mods = mainMod,
     action = {
-        start  = function(e) zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
-        update = function(e) zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
+        start  = function(e) cursor.zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
+        update = function(e) cursor.zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
     },
 })
 
