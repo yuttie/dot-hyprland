@@ -695,12 +695,5 @@ hl.workspace_rule({ workspace = "s[true]", gaps_in = 24, gaps_out = 48 })
 ----------------------------
 --- HOST-SPECIFIC CONFIG ---
 ----------------------------
-local function get_hostname()
-    local f = io.popen("hostname")
-    if not f then return nil end
-    local name = f:read("*l")  -- read one line
-    f:close()
-    return name
-end
-
-require("host." .. get_hostname())
+local host = require("lib.host")
+require("host." .. host.get_hostname())
