@@ -566,10 +566,9 @@ bind({mainMod, "SHIFT", "T"},   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " |
 bind({mainMod, "CONTROL", "P"}, hl.dsp.exec_cmd("path=$(" .. findPapers   .. " | " .. rofi .. " -dmenu -i -p \"Open a paper\" -theme-str \"window { width: 50%; }\"); if [ -n \"$path\" ]; then xdg-open \"$HOME/Literature/$path\"; fi"))
 bind({mainMod, "CONTROL", "R"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/eval_expr.sh"))
 
-bind({mainMod, "CONTROL", "D"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/show-display-menu.sh"))
-
 -- swaync
 bind({mainMod, "CONTROL", "N"}, hl.dsp.exec_cmd("swaync-client -t"))
+bind({mainMod, "CONTROL", "D"}, hl.dsp.exec_cmd("swaync-client --close-latest"))
 
 -- Audio control
 bind({"XF86AudioRaiseVolume"}, hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"),     { locked = true, repeating = true })
