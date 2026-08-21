@@ -425,9 +425,7 @@ hl.config({
 ---------------------
 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
-local function bind(keys, dispatcher)
-    return hl.bind(table.concat(keys, " + "), dispatcher)
-end
+local bind = require("lib.bind")
 
 -- Launch app
 bind({mainMod, "semicolon"},       hl.dsp.exec_cmd(terminal))
