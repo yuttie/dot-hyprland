@@ -477,15 +477,8 @@ hl.gesture({ fingers = 3, direction = "vertical", action = "special", workspace_
 bind({mainMod, "slash"}, hl.dsp.layout("togglesplit"))
 
 -- Group
-bind({mainMod, "T"}, function()
-    local w = hl.get_active_window()
-    if w == nil then
-        return
-    end
-    if w.group == nil then
-        hl.dispatch(hl.dsp.group.toggle())
-    end
-end)
+local group = require("lib.group")
+bind({mainMod, "T"}, group.group_active_window)
 bind({mainMod, "CONTROL", "T"}, function()
     local w = hl.get_active_window()
     if w == nil then
