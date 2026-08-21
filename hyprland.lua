@@ -425,9 +425,7 @@ hl.config({
 ---------------------
 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
-local function bind(keys, dispatcher)
-    return hl.bind(table.concat(keys, " + "), dispatcher)
-end
+local bind = require("lib.bind")
 
 -- Launch app
 bind({mainMod, "semicolon"},       hl.dsp.exec_cmd(terminal))
@@ -451,58 +449,15 @@ bind({mainMod, "CONTROL", "Up"},    hl.dsp.focus({ monitor = "u" }))
 bind({mainMod, "CONTROL", "Down"},  hl.dsp.focus({ monitor = "d" }))
 
 -- Workspace
-
---- Next (dir = 1) or previous (dir = -1) workspace name on a monitor,
---- in lexicographic order, wrapping around. Single pass, no allocation.
----@param dir 1|-1
----@param mon? HL.MonitorSelector
----@param lt? fun(a: string, b: string): boolean
----@return string|nil
-local function adjacent_workspace(dir, mon, lt)
-    local monitor = mon and hl.get_monitor(mon) or hl.get_active_monitor()
-    if not monitor then return nil end
-
-    local active = hl.get_active_workspace(monitor)
-    if not active then return nil end
-    local current = active.name
-
-    lt = lt or function(a, b) return a < b end
-    -- Searching backwards is the same search with the order flipped.
-    local before = dir > 0 and lt or function(a, b) return lt(b, a) end
-
-    local best, wrap = nil, nil
-    for _, ws in ipairs(hl.get_workspaces()) do
-        local m = ws.monitor
-        if m and m.id == monitor.id and not ws.special then
-            local name = ws.name
-            if before(current, name) and (best == nil or before(name, best)) then
-                best = name
-            end
-            if wrap == nil or before(name, wrap) then
-                wrap = name
-            end
-        end
-    end
-
-    return best or wrap
-end
-
-function focus_adjacent_workspace(dir)
-    return function()
-        local target = adjacent_workspace(dir)
-        if target then
-            hl.dispatch(hl.dsp.focus({ workspace = "name:" .. target }))
-        end
-    end
-end
+local workspace = require("lib.workspace")
 
 bind({mainMod, "B"},                         hl.dsp.focus({ workspace = "previous_per_monitor" }))
-bind({mainMod, "SHIFT", "Tab"},              focus_adjacent_workspace(-1))
-bind({mainMod, "Tab"},                       focus_adjacent_workspace(1))
-bind({mainMod, "Left"},                      focus_adjacent_workspace(-1))
-bind({mainMod, "Right"},                     focus_adjacent_workspace(1))
-bind({mainMod, "mouse_left"},                focus_adjacent_workspace(-1))
-bind({mainMod, "mouse_right"},               focus_adjacent_workspace(1))
+bind({mainMod, "SHIFT", "Tab"},              workspace.focus_adjacent(-1))
+bind({mainMod, "Tab"},                       workspace.focus_adjacent(1))
+bind({mainMod, "Left"},                      workspace.focus_adjacent(-1))
+bind({mainMod, "Right"},                     workspace.focus_adjacent(1))
+bind({mainMod, "mouse_left"},                workspace.focus_adjacent(-1))
+bind({mainMod, "mouse_right"},               workspace.focus_adjacent(1))
 bind({mainMod, "V"},                         hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/switch-workspace.sh"))
 bind({mainMod, "SHIFT", "R"},                hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/rename-workspace.sh"))
 bind({mainMod, "SHIFT", "comma"},            hl.dsp.workspace.move({ monitor = "l" }))
@@ -522,24 +477,9 @@ hl.gesture({ fingers = 3, direction = "vertical", action = "special", workspace_
 bind({mainMod, "slash"}, hl.dsp.layout("togglesplit"))
 
 -- Group
-bind({mainMod, "T"}, function()
-    local w = hl.get_active_window()
-    if w == nil then
-        return
-    end
-    if w.group == nil then
-        hl.dispatch(hl.dsp.group.toggle())
-    end
-end)
-bind({mainMod, "CONTROL", "T"}, function()
-    local w = hl.get_active_window()
-    if w == nil then
-        return
-    end
-    if w.group ~= nil then
-        hl.dispatch(hl.dsp.group.toggle())
-    end
-end)
+local group = require("lib.group")
+bind({mainMod, "T"}, group.group_active_window)
+bind({mainMod, "CONTROL", "T"}, group.ungroup_active_window)
 bind({mainMod, "P"},          hl.dsp.group.prev())
 bind({mainMod, "N"},          hl.dsp.group.next())
 bind({mainMod, "mouse_up"},   hl.dsp.group.prev())
@@ -581,24 +521,21 @@ bind({mainMod, "mouse:273"}, hl.dsp.window.resize(), { mouse = true })
 bind({mainMod, "mouse:274"}, hl.dsp.window.close())
 
 -- Magnifier
-local function zoom(r)
-    local factor = hl.get_config("cursor.zoom_factor")
-    hl.config({ cursor = { zoom_factor = math.max(factor * r, 1) } })
-end
+local cursor = require("lib.cursor")
 local zoom_coef = 2 ^ (1 / 2)
-bind({mainMod, "Page_Up"},               function() zoom(zoom_coef)     end)
-bind({mainMod, "Page_Down"},             function() zoom(1 / zoom_coef) end)
-bind({mainMod, "Equal"},                 function() zoom(zoom_coef)     end)
-bind({mainMod, "Minus"},                 function() zoom(1 / zoom_coef) end)
-bind({mainMod, "CONTROL", "mouse_up"},   function() zoom(zoom_coef)     end)
-bind({mainMod, "CONTROL", "mouse_down"}, function() zoom(1 / zoom_coef) end)
+bind({mainMod, "Page_Up"},               function() cursor.zoom(zoom_coef)     end)
+bind({mainMod, "Page_Down"},             function() cursor.zoom(1 / zoom_coef) end)
+bind({mainMod, "Equal"},                 function() cursor.zoom(zoom_coef)     end)
+bind({mainMod, "Minus"},                 function() cursor.zoom(1 / zoom_coef) end)
+bind({mainMod, "CONTROL", "mouse_up"},   function() cursor.zoom(zoom_coef)     end)
+bind({mainMod, "CONTROL", "mouse_down"}, function() cursor.zoom(1 / zoom_coef) end)
 hl.gesture({
     fingers = 3,
     direction = "vertical",
     mods = mainMod,
     action = {
-        start  = function(e) zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
-        update = function(e) zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
+        start  = function(e) cursor.zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
+        update = function(e) cursor.zoom(zoom_coef ^ (-0.025 * e.delta.y)) end,
     },
 })
 
@@ -758,12 +695,5 @@ hl.workspace_rule({ workspace = "s[true]", gaps_in = 24, gaps_out = 48 })
 ----------------------------
 --- HOST-SPECIFIC CONFIG ---
 ----------------------------
-local function get_hostname()
-    local f = io.popen("hostname")
-    if not f then return nil end
-    local name = f:read("*l")  -- read one line
-    f:close()
-    return name
-end
-
-require("host." .. get_hostname())
+local host = require("lib.host")
+require("host." .. host.get_hostname())
