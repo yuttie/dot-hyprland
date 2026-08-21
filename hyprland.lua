@@ -377,7 +377,8 @@ hl.config({
 
 hl.config({
     cursor = {
-        zoom_detached_camera = false,
+        zoom_rigid = false,
+        zoom_detached_camera = true,
         zoom_disable_aa = true,
         hide_on_key_press = true,
     },
