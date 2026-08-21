@@ -99,6 +99,15 @@ hl.on("hyprland.start", function()
 end)
 
 
+----------------
+---- EVENTS ----
+----------------
+
+hl.on("monitor.layout_changed", function()
+    hl.exec_cmd("killall swaybg; swaybg --image ~/wallpaper --mode fill")
+end)
+
+
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
