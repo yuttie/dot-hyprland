@@ -504,7 +504,7 @@ bind({mainMod, "CONTROL", "space"}, hl.dsp.window.cycle_next({ tiled = true }))
 bind({mainMod, "SHIFT", "space"},   hl.dsp.window.float({ action = "toggle" }))
 bind({mainMod, "F"},                hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 bind({mainMod, "CONTROL", "F"},     hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
-bind({mainMod, "SHIFT", "S"},       hl.dsp.window.pin())
+bind({mainMod, "SHIFT", "C"},       hl.dsp.window.pin())
 
 -- Move focus
 bind({mainMod, "H"}, hl.dsp.focus({ direction = "l" }))
