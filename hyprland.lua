@@ -635,6 +635,7 @@ hl.window_rule({
 hl.window_rule({ border_color = { colors = {"rgba(ccff33ee)", "rgba(ff7a33ee)"}, angle = 45 }, match = { fullscreen_state_client = 1 } })
 
 -- Make some windows floating by default
+hl.window_rule({ float = true, match = { class = "^(hyprland-share-picker)$" } })
 hl.window_rule({ float = true, match = { class = "^(org.gnome.Calculator)$" } })
 hl.window_rule({ float = true, match = { class = "^(org.pipewire.Helvum)$" } })
 hl.window_rule({ float = true, match = { title = "^(New Text Note — Okular)$" } })
