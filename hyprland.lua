@@ -681,9 +681,9 @@ hl.window_rule({ match = { tag = "firefox-notification" }, border_size = 0 })
 hl.window_rule({ tag = "+modal", match = { class = "^(pinentry-.*|hyprpolkitagent|gcr-prompter)$" } })
 -- File open/save dialogs
 hl.window_rule({ tag = "+modal", match = { class = "^(xdg-desktop-portal-gtk)$" } })
-hl.window_rule({ tag = "+modal", match = { class = "^(firefox)$, match:title ^(Save Image)$" } })
-hl.window_rule({ tag = "+modal", match = { class = "^(mozc_tool)$, match:title ^(export to file|import from file)$" } })
-hl.window_rule({ tag = "+modal", match = { class = "^(nemo)$, match:title ^(Select Target Folder For Move)$" } })
+hl.window_rule({ tag = "+modal", match = { class = "^(firefox)$", title = "^(Save Image)$" } })
+hl.window_rule({ tag = "+modal", match = { class = "^(mozc_tool)$", title = "^(export to file|import from file)$" } })
+hl.window_rule({ tag = "+modal", match = { class = "^(nemo)$", title = "^(Select Target Folder For Move)$" } })
 -- Rules
 hl.window_rule({ match = { tag = "modal" }, float = true })
 hl.window_rule({ match = { tag = "modal" }, stay_focused = true })
