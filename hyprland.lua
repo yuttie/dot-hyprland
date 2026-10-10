@@ -522,8 +522,10 @@ bind({mainMod, "CONTROL", "H"}, hl.dsp.window.move({ direction = "l", group_awar
 bind({mainMod, "CONTROL", "L"}, hl.dsp.window.move({ direction = "r", group_aware = true }))
 bind({mainMod, "CONTROL", "K"}, hl.dsp.window.move({ direction = "u", group_aware = true }))
 bind({mainMod, "CONTROL", "J"}, hl.dsp.window.move({ direction = "d", group_aware = true }))
-bind({mainMod, "M"},            hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace-silent.sh"))
-bind({mainMod, "SHIFT", "M"},   hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace.sh"))
+bind({mainMod, "M"},                     hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace.sh"))
+bind({mainMod, "SHIFT", "M"},            hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace.sh --follow"))
+bind({mainMod, "CONTROL", "M"},          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace.sh --single"))
+bind({mainMod, "CONTROL", "SHIFT", "M"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/move-to-workspace.sh --single --follow"))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 bind({mainMod, "mouse:272"}, hl.dsp.window.drag(), { mouse = true })
