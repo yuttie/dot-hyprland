@@ -9,5 +9,5 @@ rofi_workspace() {
 
 NAME="$(rofi_workspace)" || exit 1
 if [ -n "$NAME" ]; then
-    hyprctl dispatch "hl.dsp.window.move({ workspace = 'name:$NAME', follow = false })"
+    hyprctl eval "require('lib.window').move_to_workspace('name:$NAME', false)"
 fi
