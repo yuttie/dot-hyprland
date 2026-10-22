@@ -6,7 +6,7 @@ set -euo pipefail
 #   --single  move only the focused window, leaving the rest of its group
 #
 # The options set the mode the menu opens in. Inside the menu, Alt+F
-# toggles --follow and Alt+S toggles --single.
+# toggles --follow and Alt+G toggles --single.
 #
 # The menu is a rofi script mode: rofi runs this script again for every
 # event, with ROFI_RETV saying what happened and ROFI_DATA carrying the
@@ -35,7 +35,7 @@ if [ -z "${ROFI_RETV:-}" ]; then
     exec rofi -show move -modi "move:$0" \
         -kb-move-word-forward Control+Right \
         -kb-custom-1 Alt+f \
-        -kb-custom-2 Alt+s
+        -kb-custom-2 Alt+g
 fi
 
 read -r FOLLOW SINGLE <<< "$ROFI_DATA"
@@ -56,15 +56,17 @@ case "$ROFI_RETV" in
 esac
 
 PROMPT="Move to workspace"
+UNIT=group
 if [ "$SINGLE" = true ]; then
     PROMPT="Move single window to workspace"
+    UNIT=window
 fi
 if [ "$FOLLOW" = false ]; then
     PROMPT="$PROMPT (silent)"
 fi
 
 printf '\0prompt\x1f%s\n' "$PROMPT"
-printf '\0message\x1f%s\n' "<b>Alt+F</b> follow: $(on_off "$FOLLOW")    <b>Alt+S</b> single window: $(on_off "$SINGLE")"
+printf '\0message\x1f%s\n' "<b>Alt+F</b> follow: $(on_off "$FOLLOW")    <b>Alt+G</b> move: $UNIT"
 printf '\0data\x1f%s\n' "$FOLLOW $SINGLE"
 printf '\0use-hot-keys\x1ftrue\n'
 printf '\0keep-filter\x1ftrue\n'
