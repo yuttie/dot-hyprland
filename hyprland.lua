@@ -565,8 +565,14 @@ bind({         "CONTROL", "SHIFT", "Print"}, hl.dsp.exec_cmd('grim -g "$(slurp)"
 local findUserDirs = os.getenv("HOME") .. "/.config/hypr/find-user-dirs.sh"
 local findPapers = os.getenv("HOME") .. "/.config/hypr/find-papers.sh"
 bind({mainMod, "SHIFT", "F"},   hl.dsp.exec_cmd(rofi .. " -show window"))
-bind({mainMod, "SHIFT", "D"},   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a directory\"); if [ -n \"$path\" ]; then xdg-open \"$path\"; fi"))
-bind({mainMod, "SHIFT", "T"},   hl.dsp.exec_cmd("path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a terminal with a directory\"); if [ -n \"$path\" ]; then " .. terminal .. " --working-directory \"$path\"; fi"))
+-- Rofi exits with 0 for Enter and 10 for Ctrl+T (kb-custom-1)
+bind({mainMod, "D"},            hl.dsp.exec_cmd(
+    "path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a directory\"" ..
+    " -mesg '<b>Enter</b> open in file manager    <b>Ctrl+T</b> open in terminal' -kb-custom-1 Control+t); rc=$?; " ..
+    "if [ -n \"$path\" ]; then case $rc in " ..
+    "0) xdg-open \"$path\" ;; " ..
+    "10) " .. terminal .. " --working-directory \"$path\" ;; " ..
+    "esac; fi"))
 bind({mainMod, "CONTROL", "P"}, hl.dsp.exec_cmd("path=$(" .. findPapers   .. " | " .. rofi .. " -dmenu -i -p \"Open a paper\" -theme-str \"window { width: 50%; }\"); if [ -n \"$path\" ]; then xdg-open \"$HOME/Literature/$path\"; fi"))
 bind({mainMod, "CONTROL", "R"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/eval_expr.sh"))
 
