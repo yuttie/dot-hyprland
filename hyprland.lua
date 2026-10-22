@@ -565,10 +565,11 @@ bind({         "CONTROL", "SHIFT", "Print"}, hl.dsp.exec_cmd('grim -g "$(slurp)"
 local findUserDirs = os.getenv("HOME") .. "/.config/hypr/find-user-dirs.sh"
 local findPapers = os.getenv("HOME") .. "/.config/hypr/find-papers.sh"
 bind({mainMod, "SHIFT", "F"},   hl.dsp.exec_cmd(rofi .. " -show window"))
--- Rofi exits with 0 for Enter and 10 for Ctrl+T (kb-custom-1)
+-- Rofi exits with 0 for Enter and 10 for Ctrl+T (kb-custom-1), which is
+-- freed from its default kb-transpose-chars
 bind({mainMod, "D"},            hl.dsp.exec_cmd(
     "path=$(" .. findUserDirs .. " | " .. rofi .. " -dmenu -i -p \"Open a directory\"" ..
-    " -mesg '<b>Enter</b> open in file manager    <b>Ctrl+T</b> open in terminal' -kb-custom-1 Control+t); rc=$?; " ..
+    " -mesg '<b>Enter</b> open in file manager    <b>Ctrl+T</b> open in terminal' -kb-transpose-chars '' -kb-custom-1 Control+t); rc=$?; " ..
     "if [ -n \"$path\" ]; then case $rc in " ..
     "0) xdg-open \"$path\" ;; " ..
     "10) " .. terminal .. " --working-directory \"$path\" ;; " ..
