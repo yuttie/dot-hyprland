@@ -5,7 +5,7 @@ set -euo pipefail
 #   --here  bring the workspace to the current monitor instead of
 #           switching to the monitor it is on
 #
-# The option sets the mode the menu opens in. Inside the menu, Alt+H
+# The option sets the mode the menu opens in. Inside the menu, Alt+B
 # toggles it.
 #
 # The menu is a rofi script mode: rofi runs this script again for every
@@ -31,7 +31,8 @@ if [ -z "${ROFI_RETV:-}" ]; then
     # The script inherits rofi's environment, so this seeds its first run.
     export ROFI_DATA="$HERE"
     exec rofi -show switch -modi "switch:$0" \
-        -kb-custom-1 Alt+h
+        -kb-move-word-back Control+Left \
+        -kb-custom-1 Alt+b
 fi
 
 HERE="$ROFI_DATA"
@@ -52,7 +53,7 @@ if [ "$HERE" = true ]; then
 fi
 
 printf '\0prompt\x1f%s\n' "$PROMPT"
-printf '\0message\x1f%s\n' "<b>Alt+H</b> bring here: $(on_off "$HERE")"
+printf '\0message\x1f%s\n' "<b>Alt+B</b> bring here: $(on_off "$HERE")"
 printf '\0data\x1f%s\n' "$HERE"
 printf '\0use-hot-keys\x1ftrue\n'
 printf '\0keep-filter\x1ftrue\n'
