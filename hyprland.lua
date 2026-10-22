@@ -573,7 +573,7 @@ bind({mainMod, "D"},            hl.dsp.exec_cmd(
     "0) xdg-open \"$path\" ;; " ..
     "10) " .. terminal .. " --working-directory \"$path\" ;; " ..
     "esac; fi"))
-bind({mainMod, "CONTROL", "P"}, hl.dsp.exec_cmd("path=$(" .. findPapers   .. " | " .. rofi .. " -dmenu -i -p \"Open a paper\" -theme-str \"window { width: 50%; }\"); if [ -n \"$path\" ]; then xdg-open \"$HOME/Literature/$path\"; fi"))
+bind({mainMod, "A"},            hl.dsp.exec_cmd("path=$(" .. findPapers   .. " | " .. rofi .. " -dmenu -i -p \"Open a paper\" -theme-str \"window { width: 50%; }\"); if [ -n \"$path\" ]; then xdg-open \"$HOME/Literature/$path\"; fi"))
 bind({mainMod, "CONTROL", "R"}, hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/eval_expr.sh"))
 
 -- swaync
