@@ -30,8 +30,8 @@ hl.monitor({
 -- Set programs that you use
 local terminal   = os.getenv("HOME") .. "/.local/bin/term"
 local editor     = terminal .. " -- sh -c 'sleep 0.05; exec nvim'"
-local webbrowser = "/usr/bin/firefox"
-local webbrowser_private = "/usr/bin/firefox --private-window"
+local webbrowser = "systemd-run --user --scope --slice=firefox.slice /usr/bin/firefox"
+local webbrowser_private = "systemd-run --user --scope --slice=firefox.slice /usr/bin/firefox --private-window"
 local subwebbrowser = "/usr/bin/google-chrome-stable"
 local rofi       = "rofi -no-case-sensitive -matching regex -sort -sorting-method fzf"
 local menu       = rofi .. " -modi drun##run -show drun -show-icons -drun-show-actions"
