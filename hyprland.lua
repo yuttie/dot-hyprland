@@ -656,6 +656,7 @@ hl.window_rule({ float = true, match = { class = "^(nemo)$", title = "^(.*Proper
 hl.window_rule({ float = true, match = { class = "^(org.inkscape.Inkscape)$", title = "(SVG Input)" } })
 hl.window_rule({ float = true, match = { class = "^()$", title = "(Picture in picture)" } })  -- Chrome's picture in picture window
 hl.window_rule({ float = true, match = { class = "^(firefox)$", title = "(Picture-in-Picture)" } })  -- Firefox's picture in picture window
+hl.window_rule({ float = true, match = { title = "^(About Mozilla Firefox)$" } })
 hl.window_rule({ float = true, match = { class = "^(file-.*)$", title = "^(Export Image as .*)$" } })  -- GIMP
 
 -- Games
