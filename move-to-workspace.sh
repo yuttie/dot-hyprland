@@ -20,6 +20,8 @@ on_off() {
     if [ "$1" = true ]; then echo on; else echo off; fi
 }
 
+. "$(dirname "$0")/lib/lua-quote.sh"
+
 if [ -z "${ROFI_RETV:-}" ]; then
     FOLLOW=false
     SINGLE=false
@@ -46,9 +48,24 @@ case "$ROFI_RETV" in
         if [ "$SINGLE" = true ]; then
             MOVE=move_single_to_workspace
         fi
+        # Rofi passes on any ROFI_INFO it was started with, so it says
+        # nothing about text typed in.
+        if [ "$ROFI_RETV" = 1 ]; then
+            # A listed workspace comes with its selector.
+            TARGET="$ROFI_INFO"
+        elif [[ "$1" =~ ^[[:digit:]]+$ ]]; then
+            # A number typed in is a numbered workspace; "name:" refuses
+            # numbers.
+            TARGET="$1"
+        else
+            # Other text typed in is the address of a named workspace,
+            # created if there is none. "name:" keeps it from being read as
+            # a selector such as "next".
+            TARGET="name:$1"
+        fi
         # Rofi would show anything printed here as a new list instead of
         # closing.
-        hyprctl eval "require('lib.window').$MOVE('name:$1', $FOLLOW)" > /dev/null
+        hyprctl eval "require('lib.window').$MOVE($(lua_quote "$TARGET"), $FOLLOW)" > /dev/null
         exit 0
         ;;
     10) FOLLOW="$(toggle "$FOLLOW")" ;;
@@ -71,4 +88,4 @@ printf '\0data\x1f%s\n' "$FOLLOW $SINGLE"
 printf '\0use-hot-keys\x1ftrue\n'
 printf '\0keep-filter\x1ftrue\n'
 printf '\0keep-selection\x1ftrue\n'
-hyprctl -j workspaces | jq -r '.[] | .name'
+hyprctl -j workspaces | jq -r -L "$(dirname "$0")/lib" 'include "workspace"; rofi_rows'
