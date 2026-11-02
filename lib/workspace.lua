@@ -1,11 +1,25 @@
 local M = {}
 
---- Next (dir = 1) or previous (dir = -1) workspace name on a monitor,
+--- Selector that picks out exactly this workspace.
+---
+--- A rename changes only the name shown, not the address: workspace 2
+--- renamed to "web" is still addressed as "2", and "name:web" would
+--- create a new, empty workspace instead of finding it.
+---@param ws HL.Workspace
+---@return string
+function M.selector(ws)
+    if ws.id or ws.special then
+        return ws.addressable_name
+    end
+    return "name:" .. ws.addressable_name
+end
+
+--- Next (dir = 1) or previous (dir = -1) workspace on a monitor, by name
 --- in lexicographic order, wrapping around. Single pass, no allocation.
 ---@param dir 1|-1
 ---@param mon? HL.MonitorSelector
 ---@param lt? fun(a: string, b: string): boolean
----@return string|nil
+---@return HL.Workspace|nil
 local function adjacent_workspace(dir, mon, lt)
     local monitor = mon and hl.get_monitor(mon) or hl.get_active_monitor()
     if not monitor then return nil end
@@ -23,11 +37,11 @@ local function adjacent_workspace(dir, mon, lt)
         local m = ws.monitor
         if m and m.id == monitor.id and not ws.special then
             local name = ws.name
-            if before(current, name) and (best == nil or before(name, best)) then
-                best = name
+            if before(current, name) and (best == nil or before(name, best.name)) then
+                best = ws
             end
-            if wrap == nil or before(name, wrap) then
-                wrap = name
+            if wrap == nil or before(name, wrap.name) then
+                wrap = ws
             end
         end
     end
@@ -41,7 +55,7 @@ function M.focus_adjacent(dir)
     return function()
         local target = adjacent_workspace(dir)
         if target then
-            hl.dispatch(hl.dsp.focus({ workspace = "name:" .. target }))
+            hl.dispatch(hl.dsp.focus({ workspace = M.selector(target) }))
         end
     end
 end
