@@ -39,9 +39,12 @@ HERE="$ROFI_DATA"
 
 case "$ROFI_RETV" in
     1|2)
+        # A listed workspace comes with its selector. Text typed in names
+        # a new workspace.
+        TARGET="${ROFI_INFO:-name:$1}"
         # Rofi would show anything printed here as a new list instead of
         # closing.
-        hyprctl dispatch "hl.dsp.focus({ workspace = 'name:$1', on_current_monitor = $HERE })" > /dev/null
+        hyprctl dispatch "hl.dsp.focus({ workspace = '$TARGET', on_current_monitor = $HERE })" > /dev/null
         exit 0
         ;;
     10) HERE="$(toggle "$HERE")" ;;
@@ -58,4 +61,4 @@ printf '\0data\x1f%s\n' "$HERE"
 printf '\0use-hot-keys\x1ftrue\n'
 printf '\0keep-filter\x1ftrue\n'
 printf '\0keep-selection\x1ftrue\n'
-hyprctl -j workspaces | jq -r '.[] | .name'
+hyprctl -j workspaces | jq -r -L "$(dirname "$0")/lib" 'include "workspace"; rofi_rows'
