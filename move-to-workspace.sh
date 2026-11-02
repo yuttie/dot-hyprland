@@ -46,12 +46,19 @@ case "$ROFI_RETV" in
         if [ "$SINGLE" = true ]; then
             MOVE=move_single_to_workspace
         fi
+        # Rofi passes on any ROFI_INFO it was started with, so it says
+        # nothing about text typed in.
         if [ "$ROFI_RETV" = 1 ]; then
             # A listed workspace comes with its selector.
             TARGET="$ROFI_INFO"
+        elif [[ "$1" =~ ^[[:digit:]]+$ ]]; then
+            # A number typed in is a numbered workspace; "name:" refuses
+            # numbers.
+            TARGET="$1"
         else
-            # Text typed in names a workspace. Rofi passes on any ROFI_INFO
-            # it was started with, so it says nothing here.
+            # Other text typed in is the address of a named workspace,
+            # created if there is none. "name:" keeps it from being read as
+            # a selector such as "next".
             TARGET="name:$1"
         fi
         # Rofi would show anything printed here as a new list instead of
