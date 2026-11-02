@@ -1,19 +1,5 @@
 local M = {}
 
---- Selector that picks out exactly this workspace.
----
---- A rename changes only the name shown, not the address: workspace 2
---- renamed to "web" is still addressed as "2", and "name:web" would
---- create a new, empty workspace instead of finding it.
----@param ws HL.Workspace
----@return string
-function M.selector(ws)
-    if ws.id or ws.special then
-        return ws.addressable_name
-    end
-    return "name:" .. ws.addressable_name
-end
-
 --- Next (dir = 1) or previous (dir = -1) workspace on a monitor, by name
 --- in lexicographic order, wrapping around. Single pass, no sorting.
 ---
@@ -64,7 +50,11 @@ function M.focus_adjacent(dir)
     return function()
         local target = adjacent_workspace(dir)
         if target then
-            hl.dispatch(hl.dsp.focus({ workspace = M.selector(target) }))
+            -- Pass the workspace itself, and Hyprland addresses it exactly.
+            -- A rename changes only the name shown: workspace 2 renamed to
+            -- "web" is still addressed as "2", and "name:web" would create
+            -- a new, empty workspace instead of finding it.
+            hl.dispatch(hl.dsp.focus({ workspace = target }))
         end
     end
 end
