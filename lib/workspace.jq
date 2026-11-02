@@ -1,6 +1,8 @@
 # Selector that picks out exactly this workspace, given an entry of
-# `hyprctl -j workspaces`. Mirrors selector() in workspace.lua: a rename
-# changes only .name, and "name:" matches .address.
+# `hyprctl -j workspaces`. Mirrors Workspace::selector() in Hyprland's
+# src/workspace/query/Query.cpp, the rule hl.dsp.* applies to a
+# workspace object: a rename changes only .name, and "name:" matches
+# .address.
 def selector:
     if .id or .type == "special" then .address else "name:" + .address end;
 
