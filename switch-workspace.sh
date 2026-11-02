@@ -39,9 +39,14 @@ HERE="$ROFI_DATA"
 
 case "$ROFI_RETV" in
     1|2)
-        # A listed workspace comes with its selector. Text typed in names
-        # a new workspace.
-        TARGET="${ROFI_INFO:-name:$1}"
+        if [ "$ROFI_RETV" = 1 ]; then
+            # A listed workspace comes with its selector.
+            TARGET="$ROFI_INFO"
+        else
+            # Text typed in names a workspace. Rofi passes on any ROFI_INFO
+            # it was started with, so it says nothing here.
+            TARGET="name:$1"
+        fi
         # Rofi would show anything printed here as a new list instead of
         # closing.
         hyprctl dispatch "hl.dsp.focus({ workspace = '$TARGET', on_current_monitor = $HERE })" > /dev/null

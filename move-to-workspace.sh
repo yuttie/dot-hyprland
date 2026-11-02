@@ -46,9 +46,14 @@ case "$ROFI_RETV" in
         if [ "$SINGLE" = true ]; then
             MOVE=move_single_to_workspace
         fi
-        # A listed workspace comes with its selector. Text typed in names
-        # a new workspace.
-        TARGET="${ROFI_INFO:-name:$1}"
+        if [ "$ROFI_RETV" = 1 ]; then
+            # A listed workspace comes with its selector.
+            TARGET="$ROFI_INFO"
+        else
+            # Text typed in names a workspace. Rofi passes on any ROFI_INFO
+            # it was started with, so it says nothing here.
+            TARGET="name:$1"
+        fi
         # Rofi would show anything printed here as a new list instead of
         # closing.
         hyprctl eval "require('lib.window').$MOVE('$TARGET', $FOLLOW)" > /dev/null
