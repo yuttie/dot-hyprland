@@ -20,6 +20,8 @@ on_off() {
     if [ "$1" = true ]; then echo on; else echo off; fi
 }
 
+. "$(dirname "$0")/lib/lua-quote.sh"
+
 if [ -z "${ROFI_RETV:-}" ]; then
     HERE=false
     for arg in "$@"; do
@@ -56,7 +58,7 @@ case "$ROFI_RETV" in
         fi
         # Rofi would show anything printed here as a new list instead of
         # closing.
-        hyprctl dispatch "hl.dsp.focus({ workspace = '$TARGET', on_current_monitor = $HERE })" > /dev/null
+        hyprctl dispatch "hl.dsp.focus({ workspace = $(lua_quote "$TARGET"), on_current_monitor = $HERE })" > /dev/null
         exit 0
         ;;
     10) HERE="$(toggle "$HERE")" ;;

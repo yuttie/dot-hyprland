@@ -20,6 +20,8 @@ on_off() {
     if [ "$1" = true ]; then echo on; else echo off; fi
 }
 
+. "$(dirname "$0")/lib/lua-quote.sh"
+
 if [ -z "${ROFI_RETV:-}" ]; then
     FOLLOW=false
     SINGLE=false
@@ -63,7 +65,7 @@ case "$ROFI_RETV" in
         fi
         # Rofi would show anything printed here as a new list instead of
         # closing.
-        hyprctl eval "require('lib.window').$MOVE('$TARGET', $FOLLOW)" > /dev/null
+        hyprctl eval "require('lib.window').$MOVE($(lua_quote "$TARGET"), $FOLLOW)" > /dev/null
         exit 0
         ;;
     10) FOLLOW="$(toggle "$FOLLOW")" ;;
