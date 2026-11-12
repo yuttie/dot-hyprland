@@ -29,7 +29,7 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal   = os.getenv("HOME") .. "/.local/bin/term"
-local editor     = terminal .. " -- sh -c 'sleep 0.05; exec nvim'"
+local editor     = terminal .. " -- nvim"
 local webbrowser = "systemd-run --user --scope --slice=firefox.slice /usr/bin/firefox"
 local webbrowser_private = "systemd-run --user --scope --slice=firefox.slice /usr/bin/firefox --private-window"
 local subwebbrowser = "/usr/bin/google-chrome-stable"
